@@ -1,0 +1,52 @@
+@hostname=http://localhost:5000
+
+# consumer port is 5000, producer port is 3000
+
+GET {{hostname}}/api/home/data/chicken/legs/raw
+Cookie: username=john
+
+###
+
+GET {{hostname}}/api/users/dogs/names
+Cookie: username=bob
+
+###
+
+POST {{hostname}}/api/data/people/things/%D1%88%D0%B5%D0%BB%D0%BB%D1%8B
+Cookie: username=alice
+
+###
+
+POST {{hostname}}/api/%E4%B8%A1/%E4%B9%93/%E4%B9%B6
+Cookie: username=alice
+
+###
+
+DELETE {{hostname}}/api/remove-user/bob
+Cookie: username=admin
+
+
+###
+
+POST {{hostname}}/api/add-endpoint
+Cookie: username=admin
+content-type: application/json
+
+{
+    "uri":"/bob/did/something/and/here/is/uri/POST/6"
+}
+
+
+###
+
+POST {{hostname}}/api/test
+content-type: application/json
+
+{
+    "uri":"/bob/did/something/and/here/is/uri/POST/6"
+}
+
+###
+
+GET {{hostname}}/api/list-users
+

@@ -1,0 +1,29 @@
+{
+  "name": "@access-tree/access-tree-express",
+  "version": "0.0.1",
+  "description": "middleware for endpoint access",
+  "main": "AccessTree.js",
+  "directories": {
+    "example": "examples",
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/access-tree/access-tree-express.git"
+  },
+  "keywords": [
+    "endpoint",
+    "security",
+    "express",
+    "middleware"
+  ],
+  "author": "John Powers",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/access-tree/access-tree-express/issues"
+  },
+  "homepage": "https://github.com/access-tree/access-tree-express#readme"
+}
