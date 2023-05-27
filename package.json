@@ -8,7 +8,7 @@
     "test": "tests"
   },
   "scripts": {
-    "test": "test"
+    "test": "jest"
   },
   "repository": {
     "type": "git",
@@ -25,5 +25,8 @@
   "bugs": {
     "url": "https://github.com/access-tree/access-tree-express/issues"
   },
-  "homepage": "https://github.com/access-tree/access-tree-express#readme"
+  "homepage": "https://github.com/access-tree/access-tree-express#readme",
+  "dependencies": {
+    "cookie-parser": "^1.4.6"
+  }
 }

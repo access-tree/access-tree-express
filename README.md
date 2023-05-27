@@ -1,4 +1,4 @@
-# Access Tree Javascript
+# Access Tree Express
 
 ### A library to provide access restrictions on express.js endpoints
 
@@ -16,9 +16,55 @@
 
 * A username cookie is read to match up the user with the endpoints they have access to.  
 
+
+
+## Setup
+
+1. install the package
+
+    npm install @access-tree/access-tree-express
+
+2. require it in your express server
+
+    let AccessTree = require('@access-tree/access-tree-express');
+
+3. instantiate the tree 
+
+    let tree = new AccessTree('root');
+
+4. read the initial user to endpoint mappings into the tree (imported from a file, first)
+
+    // in your initial dependency imports
+    const userData = require('./userData.json');
+    tree.readUserFile(userData)
+
+## Examples: loading the initial user to endpoint mappings
+
+* here are some example user to endpoint mappings
+* this is the format for data to be read and loaded by readUserFile method
+
+```javascript
+{
+    "paths": [
+        "/john/api/home/data/chicken/legs/raw/GET/6",
+        "/john/api/home/data/chicken/legs/raw/POST/0",
+        "/john/api/home/data/chicken/legs/cooked/GET/4",
+        "/bob/api/users/dogs/names/GET/4",
+        "/alice/api/data/people/things/шеллы/POST/6",
+        "/alice/api/両/乓/乶/POST/6",
+        "/admin/api/add-endpoint/POST/6",
+        "/admin/api/remove-user/DELETE/6"
+    ]
+}
+```
+
+## Examples: Applying Access-Tree to Express Endpoints
+
 _Here is an example of endpoint access for a read endpoint (bob has access):_
 
 ```javascript
+// user to endpoint mapping is:
+//      /bob/api/users/dogs/names/GET/4
 app.get(
     "/api/users/dogs/names",
     tree.endpointAccess(tree, "read"),
@@ -27,18 +73,11 @@ app.get(
     }
 );
 ```
-
-## Why is Access Tree worth using ? 
-
-1. The Tree is a Trie, optimized for string completion with O^1 time complexity for searching.
-
-2. The Tree uses references, non-contiguous memory, so it can scale big for large organizations.
-
-3. The Tree can be mutated in real-time so an administrator can modify permissions without rebooting a server
-
 _Here is an example where endpoint validation is done and then the access tree is modified:_
 
 ```javascript
+// user to endpoint mapping is:
+//     /admin/api/remove-user/DELETE/6
 app.delete("/api/remove-user/:username",
     tree.endpointAccess(tree, "write"),
     (req, res) => {
@@ -47,6 +86,28 @@ app.delete("/api/remove-user/:username",
     }
 );
 ```
+_Here is an example of endpoint access for admin, who will list the users in the tree:_
+
+```javascript
+// user to endpoint mapping for admin user is:
+//   /admin/api/list-users/GET/4
+app.get(
+    "/api/list-users",
+    tree.endpointAccess(tree, "read"),
+    (req, res) => {
+        const users = tree.listUsers();
+        res.json({ message: users });
+    }
+);
+```
+## Why is Access Tree worth using ? 
+
+1. The Tree is a Trie, optimized for string completion with O^1 time complexity for searching.
+
+2. The Tree uses references, non-contiguous memory, so it can scale big for large organizations.
+
+3. The Tree can be mutated in real-time so an administrator can modify permissions without rebooting a server
+
 * A User tree can be pruned or an endpoint can be added.  
 
 * To add a new user, you add all their endpoints.
