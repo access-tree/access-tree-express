@@ -66,7 +66,7 @@ app.get(
 );
 ```
 
-_Here is an endpoint access example with utf-8 non-ascii characters
+_Here is an endpoint access example with utf-8 non-ascii characters_
 
 ```javascript
 // user to endpoint mapping is:
