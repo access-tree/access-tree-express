@@ -12,17 +12,21 @@
 
 ## Setup
 
-1. install the package
+1. install the access-tree-express package and the cookie-parser package
 
-    npm install @access-tree/access-tree-express
+    npm install @access-tree/access-tree-express cookie-parser
 
-2. require it in your express server
+2. require access-tree-express in your express server and cookie-parser
 
     let AccessTree = require('@access-tree/access-tree-express');
+    const cookieParser = require('cookie-parser');
 
-3. instantiate the tree 
+3. instantiate the tree and apply the cookie parser middleware globally, as well as apply a body-parser type middleware
 
     let tree = new AccessTree('root');
+    app.use(cookieParser());
+    // express native body parser
+    app.use(express.json());
 
 4. read the initial user to endpoint mappings into the tree (imported from a file, first)
 ```javascript
