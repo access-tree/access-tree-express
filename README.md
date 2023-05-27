@@ -4,19 +4,11 @@
 
 ## How does it work ? 
 
-1. Access tree is instantiated with a list of endpoints with users and permissions, for example:
+1. User to endpoint mappings are ingested into a Tree data structure.
 
-    `"/bob/api/users/dogs/names/GET/4",`
+2. Endpoint access middleware is designed to be applied to an Express.js endpoint.
 
-* The user bob has read (4) access to the endpoint /api/users/dogs/names.
-
-2. User endpoints are ingested into a Tree data structure, with sub-trees for each user.
-
-3. Endpoint access middleware is designed to be applied to an Express.js endpoint.
-
-* A username cookie is read to match up the user with the endpoints they have access to.  
-
-
+3. A username cookie is read to match up the user permissions with the endpoints + HTTP Verb they have access to.  
 
 ## Setup
 
@@ -33,11 +25,11 @@
     let tree = new AccessTree('root');
 
 4. read the initial user to endpoint mappings into the tree (imported from a file, first)
-
+```javascript
     // in your initial dependency imports
     const userData = require('./userData.json');
     tree.readUserFile(userData)
-
+```
 ## Examples: loading the initial user to endpoint mappings
 
 * here are some example user to endpoint mappings
@@ -73,6 +65,20 @@ app.get(
     }
 );
 ```
+
+_Here is an endpoint access example with utf-8 non-ascii characters
+
+```javascript
+// user to endpoint mapping is:
+//      /alice/api/両/乓/乶/POST/6
+app.post("/api/%E4%B8%A1/%E4%B9%93/%E4%B9%B6",
+    tree.endpointAccess(tree, "write"),
+    (req, res) => {
+        res.json({ message: "hello there" })
+    }
+);
+```
+
 _Here is an example where endpoint validation is done and then the access tree is modified:_
 
 ```javascript
