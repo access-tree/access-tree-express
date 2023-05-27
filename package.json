@@ -1,6 +1,6 @@
 {
   "name": "@access-tree/access-tree-express",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "middleware for endpoint access",
   "main": "AccessTree.js",
   "directories": {
