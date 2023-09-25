@@ -38,6 +38,11 @@ class AccessTree {
         uriSplit.shift();
         this.add(uriSplit);
     }
+    removeUri(uri){
+        let uriSplit = uri.split("/");
+        uriSplit.shift();
+        this.remove(uriSplit);
+    }
     add(uriSplit) {
         let runner = this._root;
         while (uriSplit.length > 0) {
@@ -49,6 +54,40 @@ class AccessTree {
                 runner = newNode;
             }
             uriSplit.shift();
+        }
+    }
+    remove(uriSplit){
+       
+        let runner = this._root;
+
+        for (let x=0; x<uriSplit.length; x++){
+
+            const segment = uriSplit[x];
+
+            if (runner.children[segment]) {
+
+                runner = runner.children[segment]
+
+            } else {
+                // runner is at the end of the tree
+                console.log(runner)
+                for (let i=uriSplit.length-1; i>1; i--){
+
+                    const segment = uriSplit[i];
+
+                    if (Object.keys(runner.children[segment].children).length === 0){
+                        // take runner up the tree one level
+                        runner = runner.parent;
+                        // delete the child node
+                        console.log(segment);
+                        delete runner.children[segment];
+
+                    } else {
+                        break;
+                    }
+
+                }
+            }
         }
     }
     find(uriSplit) {

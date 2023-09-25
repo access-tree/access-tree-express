@@ -27,4 +27,11 @@ describe('AccessTree', () => {
     const perm = tree.find(["bob","api","can","run","GET"])
     expect(perm).toBe(0);
   });
+  test('removeUri method PASS', () => {
+    tree.addUri("/bob/api/can/run/GET/4")
+    tree.removeUri("/bob/api/can/run/GET/4");
+    const perm = tree.find(["bob","api","can","run","GET","4"]);
+    console.log(perm);
+    expect(perm).toBe(0);
+  });
 });
