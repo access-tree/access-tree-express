@@ -29,9 +29,15 @@ describe('AccessTree', () => {
   });
   test('removeUri method PASS', () => {
     tree.addUri("/bob/api/can/run/GET/4")
+    tree.addUri("/bob/api/can/run/POST/4")
     tree.removeUri("/bob/api/can/run/GET/4");
-    const perm = tree.find(["bob","api","can","run","GET","4"]);
-    console.log(perm);
-    expect(perm).toBe(0);
+    // test permission still exists
+    const perm1 = tree.find(["bob","api","can","run","GET","4"]);
+    console.log(perm1);
+    expect(perm1).toBe(0);
+    // test permissions is removed by pruning end of tree
+    const perm2 = tree.find(["bob","api","can","run","GET","4"]);
+    console.log(perm2);
+    expect(perm2).toBe(0);
   });
 });
